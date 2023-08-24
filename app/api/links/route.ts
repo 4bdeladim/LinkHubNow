@@ -32,18 +32,39 @@ export async function POST(request: NextRequest) {
                 { status: 401 },
             );
         }
-        const id = user.id;
+        const userId = user.id;
+        const account = await prisma.account.findUnique({
+            where: {
+                userId: userId,
+            },
+        });
+        if (!account) {
+            return NextResponse.json(
+                { error: "Account not found" },
+                { status: 404 },
+            );
+        }
         await prisma.link.create({
             data: {
                 title,
                 url: link,
-                userId: id,
                 icon,
+                accountId: account.id,
             },
         });
-        return NextResponse.json({ message: "Link Created Successfully" });
+        const links = await prisma.link.findMany({
+            where: {
+                accountId: account.id,
+            },
+        });
+        
+        return NextResponse.json({
+            message: "Link Created Successfully",
+            links: links, 
+        });
     } catch (error) {
-        return NextResponse.json({ message: "Something went wrong"});
+        console.log(error);
+        return NextResponse.json({ message: "Something went wrong" });
     }
 }
 
