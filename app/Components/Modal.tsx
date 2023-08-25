@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 
 type TProps = {
+    // eslint-disable-next-line no-unused-vars
     save: (title: string, url: string, icon: string) => void;
     loading: boolean;
 };

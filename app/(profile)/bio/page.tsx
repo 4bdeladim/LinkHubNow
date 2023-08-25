@@ -19,10 +19,7 @@ export default function Bio() {
             const { data } = await axios.get("/api/bio")
             console.log(data)
             setUpdatedBio(data.bio);
-        } catch (error) {
-            console.log(error);
-        }
-        
+        } catch (error){}
     }
     const handleBioChange = (typedBio: string) => {
         setBio(typedBio);

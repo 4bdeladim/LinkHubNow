@@ -1,10 +1,11 @@
+
 "use client";
 import Modal from "@/app/Components/Modal";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { FacebookDark, FacebookLight, getIconComponent } from "@/lib/icons";
+import {  getIconComponent } from "@/lib/icons";
 
 type TLink = {
     title: string;
@@ -24,15 +25,17 @@ export default function Edit() {
     const userId = user?.id;
     const [links, setLinks] = useState<TLink[]>([]);
     const [loading, setLoading] = useState(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
-        if(userId) getLinks();
+        const getLinks = async () => {
+            const response = await axios.get(`/api/links/${userId}`);
+            const links:TLink[] = response.data.links
+    
+            setLinks(links)
+        }
+        if(userId) getLinks()
     }, [userId])
-    const getLinks = async () => {
-        const response = await axios.get(`/api/links/${userId}`);
-        const links:TLink[] = response.data.links
-
-        setLinks(links)
-    }
+    
     const saveLink = async (title: string, link: string, icon: string) => {
         try {
             setLoading(true);
