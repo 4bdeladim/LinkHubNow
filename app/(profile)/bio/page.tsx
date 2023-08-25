@@ -8,6 +8,7 @@ export default function Bio() {
     const [bio, setBio] = useState("");
     const [updatedBio, setUpdatedBio] = useState("");
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string>("")
     const session = useSession();
     const user = session?.data?.user;
 
@@ -19,7 +20,9 @@ export default function Bio() {
             const { data } = await axios.get("/api/bio")
             console.log(data)
             setUpdatedBio(data.bio);
-        } catch (error){}
+        } catch (error){
+            setError(error as string)
+        }
     }
     const handleBioChange = (typedBio: string) => {
         setBio(typedBio);
