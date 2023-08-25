@@ -28,7 +28,7 @@ const Modal: React.FC<TProps> = ({ save, loading }) => {
             <button
                 onClick={openModal}
                 type="button"
-                className="w-[320px] flex justify-center gap-4 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-2 my-8 dark:bg-white dark:text-black"
+                className="w-[320px] flex justify-center gap-4  font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-2 my-8 bg-white text-black"
             >
                 <svg
                     width="16"
@@ -50,7 +50,7 @@ const Modal: React.FC<TProps> = ({ save, loading }) => {
                         strokeLinecap="round"
                     />
                 </svg>
-                <span className="text-white dark:text-black">Add Link</span>
+                <span className="text-black">Add Link</span>
             </button>
 
             {isOpen && (
@@ -116,8 +116,9 @@ const Modal: React.FC<TProps> = ({ save, loading }) => {
                                 id="countries"
                                 className="bg-white border border-gray-300 text-black text-sm rounded-lg  block w-full p-2.5 outline-none cursor-pointer"
                                 onChange={(e) => setIcon(e.target.value)}
+                                defaultValue="Link Icon"
                             >
-                                <option selected>Link Icon</option>
+                                <option value="Link Icon">Link Icon</option>
                                 <option value="facebook">Facebook</option>
                                 <option value="twitter">Twitter</option>
                                 <option value="instagram">Instagram</option>

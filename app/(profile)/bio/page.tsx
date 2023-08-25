@@ -20,7 +20,7 @@ export default function Bio() {
             console.log(data)
             setUpdatedBio(data.bio);
         } catch (error) {
-            return null;
+            console.log(error);
         }
         
     }
@@ -47,17 +47,17 @@ export default function Bio() {
             <Image
                 width="180"
                 height="180"
-                src={user?.image as string}
+                src={user?.image as string || ""}
                 alt="Avatar"
                 className="border rounded-full"
             />
-            <h1 className="text-black dark:text-white my-4">
+            <h1 className="text-white my-4">
                 { updatedBio }
             </h1>
             <div className="w-[500px]">
                 <label
                     htmlFor="bio"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium text-white"
                 >
                     Your Bio
                 </label>
@@ -66,18 +66,18 @@ export default function Bio() {
                     rows={4}
                     value={bio}
                     onChange={(e) => handleBioChange(e.target.value)}
-                    className="outline-none block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                    className="outline-none block p-2.5 w-full text-sm  rounded-lg border border-gray-300 bg-black dark:border-gray-600 dark:placeholder-gray-40 text-white"
                     placeholder="Write your bio here..."
                 ></textarea>
                 {loading ? (
                     <button
                         onClick={changeBio}
-                        className="w-[200px] flex justify-center gap-4 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-2 my-8 dark:bg-white dark:text-black"
+                        className="w-[200px] flex justify-center gap-4  font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-2 my-8 bg-white text-black"
                     >
                         <svg
                             aria-hidden="true"
                             role="status"
-                            className="inline w-4 h-4 text-white dark:text-black animate-spin"
+                            className="inline w-4 h-4 text-black animate-spin"
                             viewBox="0 0 100 101"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +95,7 @@ export default function Bio() {
                 ) : (
                     <button
                         onClick={changeBio}
-                        className="w-[200px] flex justify-center gap-4 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-2 my-8 dark:bg-white dark:text-black"
+                        className="w-[200px] flex justify-center gap-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-2 my-8 bg-white text-black"
                     >
                         Save
                     </button>

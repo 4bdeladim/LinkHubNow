@@ -18,7 +18,7 @@ export default function RootLayout({
     return (
       <NextAuthProvider>
         <html lang="en">
-            <body className={`${inter.className} bg-white dark:bg-black flex justify-center flex-col`}>
+            <body className={`${inter.className} bg-black flex justify-center flex-col`}>
               {children}
             </body>
         </html>

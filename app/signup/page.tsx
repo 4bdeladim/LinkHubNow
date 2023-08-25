@@ -65,14 +65,14 @@ export default function SignUp() {
 
     return (
         <div className="w-full flex justify-center items-center flex-col h-screen">
-            <h1 className="text-gray-700 dark:text-white font-semibold text-lg mb-4">
+            <h1 className="text-white font-semibold text-lg mb-4">
                 Create a new account.
             </h1>
             <form className="w-full max-w-lg p-4 rounded-md">
                 <div className="flex flex-wrap -mx-3">
                     <div className="w-full px-3">
                         <label
-                            className="block uppercase tracking-wide text-gray-700 dark:text-white text-xs font-bold mb-2"
+                            className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
                             htmlFor="grid-name"
                         >
                             Name
@@ -89,7 +89,7 @@ export default function SignUp() {
                 <div className="flex flex-wrap -mx-3">
                     <div className="w-full px-3">
                         <label
-                            className="block uppercase tracking-wide text-gray-700 dark:text-white text-xs font-bold mb-2"
+                            className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
                             htmlFor="grid-password"
                         >
                             Email
@@ -106,14 +106,14 @@ export default function SignUp() {
                 <div className="flex flex-wrap -mx-3 mb-3">
                     <div className="w-full px-3">
                         <label
-                            className="block uppercase tracking-wide text-gray-700 dark:text-white text-xs font-bold mb-2"
+                            className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
                             htmlFor="grid-password"
                         >
                             Password
                         </label>
                         <input
                             onChange={(e) => setPassword(e.target.value)}
-                            className="appearance-none block w-full bg-gray-200  text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                            className="appearance-none block w-full bg-gray-200  border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="grid-password"
                             type="password"
                             placeholder="******************"
@@ -123,7 +123,7 @@ export default function SignUp() {
                 <div className="flex flex-wrap -mx-3 mb-3">
                     <div className="w-full px-3">
                         <label
-                            className="block uppercase tracking-wide dark:text-white text-gray-700 text-xs font-bold mb-2"
+                            className="block uppercase tracking-wide text-white text-xs font-bold mb-2"
                             htmlFor="grid-password"
                         >
                             Confirm Password
@@ -137,7 +137,7 @@ export default function SignUp() {
                             type="password"
                             placeholder="******************"
                         />
-                        <p className="text-gray-600 text-xs italic dark:text-white">
+                        <p className="text-xs italic text-white">
                             Make it as long and as crazy as you&lsquo;d like
                         </p>
                     </div>
@@ -151,7 +151,7 @@ export default function SignUp() {
                         <div role="status">
                             <svg
                                 aria-hidden="true"
-                                className="inline w-4 h-4 text-gray-200  animate-spin dark:text-gray-600 fill-gray-600 dark:fill-gray-300"
+                                className="inline w-4 h-4 text-gray-200  animate-spin fill-gray-300"
                                 viewBox="0 0 100 101"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"

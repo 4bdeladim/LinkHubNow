@@ -41,21 +41,21 @@ export default function SignIn() {
     }
     return (
         <div className="w-full flex justify-center items-center flex-col h-screen">
-            <h1 className="text-gray-700 font-semibold text-lg mb-4 dark:text-white">
+            <h1 className="font-semibold text-lg mb-4 text-white">
                 Sign in to your account.
             </h1>
             <form className="w-full max-w-lg p-4 rounded-md">
                 <div className="flex flex-wrap -mx-3 my-3">
                     <div className="w-full px-3">
                         <label
-                            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 dark:text-white "
+                            className="block uppercase tracking-wide  text-xs font-bold mb-2 text-white "
                             htmlFor="grid-password"
                         >
                             Email
                         </label>
                         <input
                             onChange={(e) => setEmail(e.target.value)}
-                            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                            className="appearance-none block w-full bg-gray-200 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             id="grid-email"
                             type="email"
                             placeholder="you@email.com"
@@ -65,7 +65,7 @@ export default function SignIn() {
                 <div className="flex flex-wrap -mx-3 my-3">
                     <div className="w-full px-3">
                         <label
-                            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 dark:text-white"
+                            className="block uppercase tracking-wide text-xs font-bold mb-2 text-white"
                             htmlFor="grid-password"
                         >
                             Password
@@ -127,7 +127,7 @@ export default function SignIn() {
                     Sign in with Github
                 </button>
                 <div className="w-full flex justify-center mt-2">
-                  <a href="/signup" className="text-gray-700 dark:text-white ">
+                  <a href="/signup" className="text-white ">
                     Sign Up ?
                   </a>
                 </div>
