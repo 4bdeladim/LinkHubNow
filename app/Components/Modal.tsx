@@ -120,20 +120,37 @@ const Modal: React.FC<TProps> = ({ save, loading }) => {
                                 defaultValue="Link Icon"
                             >
                                 <option value="Link Icon">Link Icon</option>
-                                <option value="facebook">Facebook</option>
-                                <option value="twitter">Twitter</option>
-                                <option value="instagram">Instagram</option>
-                                <option value="linkedin">LinkedIn</option>
-                                <option value="youtube">YouTube</option>
-                                <option value="pinterest">Pinterest</option>
-                                <option value="tiktok">TikTok</option>
-                                <option value="snapchat">Snapchat</option>
+                                <option value="Apple">Apple</option>
+                                <option value="Dribbble">Dribbble</option>
+                                <option value="Github">Github</option>
+                                <option value="LinkedIn">LinkedIn</option>
+                                <option value="Pinterest">Pinterest</option>
+                                <option value="Snapchat">Snapchat</option>
+                                <option value="Threads">Threads</option>
+                                <option value="Twitch">Twitch</option>
+                                <option value="Twitter">Twitter</option>
+                                <option value="Clubhouse">Clubhouse</option>
+                                <option value="Facebook">Facebook</option>
+                                <option value="Google">Google</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Reddit">Reddit</option>
+                                <option value="Spotify">Spotify</option>
+                                <option value="TikTok">TikTok</option>
+                                <option value="VK">VK</option>
+                                <option value="YouTube">YouTube</option>
+                                <option value="Discord">Discord</option>
+                                <option value="Figma">Figma</option>
+                                <option value="Instagram">Instagram</option>
+                                <option value="Messenger">Messenger</option>
+                                <option value="Signal">Signal</option>
+                                <option value="Telegram">Telegram</option>
+                                <option value="Tumblr">Tumblr</option>
+                                <option value="WhatsApp">WhatsApp</option>
                             </select>
                             {!loading ? (
                                 <button
                                     onClick={saveLink}
                                     className="mt-3 bg-black rounded-lg text-white px-10 py-2 font-bold"
-                                    
                                 >
                                     Add
                                 </button>

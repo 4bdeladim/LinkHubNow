@@ -53,7 +53,7 @@ export const authOptions: NextAuthOptions = {
                     if (await argon2.verify(user.password!, password!)) {
                         return user;
                     } else {
-                        return null;
+                        return null
                     }
                 } catch (error) {
                     return null;

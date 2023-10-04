@@ -2,6 +2,8 @@
 import { redirect, useSearchParams } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
+import Toast from "./Components/Toast";
+
 
 type TLoginType = "credentials" | "google" | "github";
 export default function SignIn() {
@@ -9,6 +11,7 @@ export default function SignIn() {
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
     const searchParams = useSearchParams();
+    const [error, setError] = useState<string>()
     const callbackUrl = searchParams.get("callbackUrl") || "/edit";
     const login = async (loginType: TLoginType) => {
         switch (loginType) {
@@ -16,15 +19,22 @@ export default function SignIn() {
                 await signIn("github", {
                     redirect: true,
                     callbackUrl,
+                    
                 });
                 return;
             case "credentials":
                 await signIn("credentials", {
                     callbackUrl,
-                    redirect: true,
+                    redirect: false,
                     email,
                     password,
-                });
+                }).then((res) => {
+                    
+                    if(!res?.error) redirect("/edit")
+                    else {
+                        setError("Invalid Credentials")
+                    }
+                })
                 return;
             case "google":
                 await signIn("google", {
@@ -133,6 +143,7 @@ export default function SignIn() {
                 </div>
                 
             </form>
+            <Toast message={error!} toastType="danger"  />
         </div>
     );
 }
