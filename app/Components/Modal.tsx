@@ -1,28 +1,61 @@
 "use client";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 import React, { useState } from "react";
 
-type TProps = {
-    // eslint-disable-next-line no-unused-vars
-    save: (title: string, url: string, icon: string) => void;
-    loading: boolean;
-};
-const Modal: React.FC<TProps> = ({ save, loading }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [title, setTitle] = useState<string>("");
-    const [URL, setURL] = useState<string>("");
-    const [icon, setIcon] = useState<string>("");
+const Modal = () => {
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [title, setTitle] = useState<string>('');
+    const [URL, setURL] = useState<string>('');
+    const [icon, setIcon] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(false);
+    const queryClient = useQueryClient();
 
-    const openModal = () => {
-        setIsOpen(true);
-    };
+  const openModal = () => {
+    setIsOpen(true);
+  };
 
-    const closeModal = () => {
-        setIsOpen(false);
-    };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
-    const saveLink = () => {
-        save(title, URL, icon);
-    };
+  const addLink = async (newLinkData: {
+    title: string;
+    link: string;
+    icon: string;
+  }) => {
+    const response = await axios.post('/api/links', newLinkData);
+    return response.data;
+  };
+
+  const mutation = useMutation(addLink, {
+    onSettled: () => {
+      queryClient.invalidateQueries(['links']);
+    },
+    onSuccess: (data) => {
+      setTitle('');
+      setURL('');
+      setIcon('');
+      closeModal(); 
+    },
+    onError: (error) => {
+        console.log(error);
+    }
+  });
+
+  const saveLink = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, title: string, link: string, icon: string) => {
+    e.preventDefault();
+    try {
+      await mutation.mutateAsync({
+        title,
+        link,
+        icon,
+      });
+      // onSuccess handler will be called for successful mutation
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
     return (
         <div>
@@ -121,7 +154,7 @@ const Modal: React.FC<TProps> = ({ save, loading }) => {
                             >
                                 <option value="Link Icon">Link Icon</option>
                                 <option value="Apple">Apple</option>
-                                <option value="Dribbble">Dribbble</option>
+                                <option value="Dribble">Dribble</option>
                                 <option value="Github">Github</option>
                                 <option value="LinkedIn">LinkedIn</option>
                                 <option value="Pinterest">Pinterest</option>
@@ -147,9 +180,11 @@ const Modal: React.FC<TProps> = ({ save, loading }) => {
                                 <option value="Tumblr">Tumblr</option>
                                 <option value="WhatsApp">WhatsApp</option>
                             </select>
-                            {!loading ? (
+                            {!mutation.isLoading ? (
                                 <button
-                                    onClick={saveLink}
+                                    onClick={(e) =>
+                                        saveLink(e, title, URL, icon)
+                                    }
                                     className="mt-3 bg-black rounded-lg text-white px-10 py-2 font-bold"
                                 >
                                     Add

@@ -28,7 +28,7 @@ export function getIconComponent(iconName: string, theme: string) {
             return theme === "dark" ? <TwitterDark /> : <TwitterLight />;
         case "Clubhouse":
             return theme === "dark" ? <ClubhouseDark /> : <ClubhouseLight />;
-        case "Dribbble":
+        case "Dribble":
             return theme === "dark" ? <DribbbleDark /> : <DribbbleLight />;
         case "Figma":
             return theme === "dark" ? <FigmaDark /> : <FigmaLight />;
@@ -50,7 +50,7 @@ export function getIconComponent(iconName: string, theme: string) {
             return theme === "dark" ? <TwitchDark /> : <TwitchLight />;
         case "WhatsApp":
             return theme === "dark" ? <WhatsAppDark /> : <WhatsAppLight />;
-        case "YouTube":
+        case "Youtube":
             return theme === "dark" ? <YouTubeDark /> : <YouTubeLight />;
         default:
             return null; // Return null for unsupported icons
@@ -103,8 +103,8 @@ export const AppleDark = () => (
 
 export const ClubhouseLight = () => (
     <svg
-        width="48"
-        height="44"
+        width="16"
+        height="16"
         viewBox="0 0 48 44"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -132,8 +132,8 @@ export const ClubhouseLight = () => (
 
 export const ClubhouseDark = () => (
     <svg
-        width="48"
-        height="44"
+        width="16"
+        height="16"
         viewBox="0 0 48 44"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

@@ -49,7 +49,7 @@ const Links = async ({ id, bio }: TProps) => {
                         href={link.url}
                         className="w-[320px] flex cursor-pointer justify-center gap-4  font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-2 my-1 bg-white text-black"
                     >
-                        {getIconComponent(link.title, "dark")}
+                        {getIconComponent(link.icon, "dark")}
                         {link.title}
                     </a>
                 );

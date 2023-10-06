@@ -13,6 +13,8 @@ datasource db {
 model Account {
   id                 String  @id @default(cuid())
   userId             String @unique
+  username           String @unique @default(cuid())
+  avatar             String?
   bio                String @default("Hello There")
   links              Link[]             
   type               String

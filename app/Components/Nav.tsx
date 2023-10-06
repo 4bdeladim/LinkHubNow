@@ -9,8 +9,8 @@ export default function Nav(){
             <Link href="/edit" className="text-white text-lg">
                 Edit
             </Link>
-            <Link href="/bio" className="text-white text-lg">
-                Bio
+            <Link href="/profile" className="text-white text-lg">
+                Profile
             </Link>
         </div>
     );

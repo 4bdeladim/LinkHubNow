@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
 import { prisma } from "@/lib/prisma";
 
+
 export async function POST(request: NextRequest) {
     const { title, link, icon } = await request.json();
     if (!title || typeof title !== "string") {
@@ -63,7 +64,6 @@ export async function POST(request: NextRequest) {
             links: links, 
         });
     } catch (error) {
-        console.log(error);
         return NextResponse.json({ message: "Something went wrong" });
     }
 }
@@ -74,5 +74,61 @@ function isValidUrl(url: string): boolean {
         return true;
     } catch (error) {
         return false;
+    }
+}
+
+
+export async function GET(){
+    try {
+        const session = await getServerSession(authOptions);
+        const id = session?.user?.id;
+        const account = await prisma.account.findUnique({
+            where: {
+                userId: id
+            }
+        })
+        const links = await prisma.link.findMany({
+            where: {
+                accountId: account?.id
+            }
+        });
+        return NextResponse.json({links});
+    } catch (error) {
+        return NextResponse.json(
+            { error: "Account not found" },
+            { status: 404 },
+        );
+    }
+}
+
+
+export async function DELETE(request: NextRequest){
+    try {
+        const { id } = await request.json();
+        const session = await getServerSession(authOptions);
+        const userId = session?.user?.id;
+        if (!userId) {
+            return NextResponse.json(
+              { error: "Unauthorized" },
+              { status: 401 }
+            );
+        }      
+        const account = await prisma.account.findUnique({
+            where: {
+                userId
+            }
+        })
+        await prisma.link.delete({
+            where: {
+                id,
+                accountId: account?.id
+            }
+        });
+        return NextResponse.json({message: "Link Deleted"})
+    } catch (error) {
+        return NextResponse.json(
+            {error: "Link not found"},
+            { status: 404}
+        )
     }
 }
