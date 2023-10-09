@@ -19,7 +19,6 @@ export default function Bio() {
         const { data } = await axios.get("/api/profile");
         return data;
     }
-    console.log(data)
     useEffect(() => {
         getProfileInfo()
     }, [])
