@@ -20,7 +20,7 @@ export default async function UserLinks({ params }: { params: { username: string
             <div className="bg-black w-screen flex h-screen justify-center items-center">
                 {
                     account && (
-                        <Links id={account.id} bio={account.bio} />
+                        <Links img={account.avatar!!} id={account.id} bio={account.bio} />
                     )
                 }
             </div>

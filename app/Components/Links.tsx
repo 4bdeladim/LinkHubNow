@@ -6,7 +6,8 @@ import Image from "next/image";
 
 type TProps = {
     id: string;
-    bio:string
+    bio:string,
+    img: string
 };
 type TLink = {
     id: string;
@@ -15,9 +16,7 @@ type TLink = {
     icon: string;
     accountId: string;
 };
-const Links = async ({ id, bio }: TProps) => {
-    const session = await getServerSession(authOptions);
-    const img = session?.user?.image;
+const Links = async ({ img, id, bio }: TProps) => {
     const accountLinks: TLink[] = await prisma.link.findMany({
         where: {
             accountId: id,

@@ -14,7 +14,7 @@ export default async function View(){
     const user = session?.user;
     if(!user){
         redirect("/")
-    }
+    } 
     const account = await prisma.account.findUnique({
         where: {
             userId: user?.id
@@ -26,7 +26,7 @@ export default async function View(){
                 <ReturnButton />
             </Link>
             { 
-                account && <Links bio={account.bio} id={account.id} />  
+                account && <Links img={account.avatar!!} bio={account.bio} id={account.id} />  
             }
         </div>
     )
