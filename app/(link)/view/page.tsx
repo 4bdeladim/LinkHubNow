@@ -1,5 +1,5 @@
-import Links from "@/app/Components/Links";
-import ReturnButton from "@/app/Components/ReturnButton";
+import Links from "@/components/Links";
+import ReturnButton from "@/components/ReturnButton";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";

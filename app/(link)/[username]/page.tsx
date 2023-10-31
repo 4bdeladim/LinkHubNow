@@ -1,4 +1,4 @@
-import Links from "@/app/Components/Links";
+import Links from "@/components/Links";
 import { prisma } from "@/lib/prisma";
 
 

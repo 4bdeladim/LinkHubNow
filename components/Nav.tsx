@@ -10,7 +10,7 @@ export default function Nav() {
     const { data} = useQuery(["profileInfo"], getProfileInfo);
     function copy() {
         if(data.username) {
-            const domain = process.env.NEXTAUTH_URL as string;
+            const domain = process.env.DOMAIN as string;
             const link = domain + "/" + data.username
             navigator.clipboard.writeText(link)
         }
