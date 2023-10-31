@@ -1,42 +1,48 @@
 "use client";
-import { SetStateAction, useState } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios";
 import Toast from "./Toast";
-import { useQueryClient } from "@tanstack/react-query";
+import { Button } from "./ui/button";
 
-export default function UploadImage({
-    setProfilePic,
-}: {
-    setProfilePic: React.Dispatch<SetStateAction<string>>;
-}) {
+interface UploadImageProps {
+    setProfilePic: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function UploadImage({ setProfilePic }: UploadImageProps) {
     const [newSelectedImage, setSelectedImage] = useState<File | null>(null);
     const [toast, setToast] = useState<{
         type: "danger" | "success";
         msg: string;
     } | null>(null);
+    const inputRef = useRef<HTMLInputElement | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
 
-    function toBase64(file: File) {
-        var reader = new FileReader();
+    const toBase64 = (file: File) => {
+        const reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = function () {
-            setProfilePic(reader.result as string);
-        };
-        reader.onerror = function (error) {
-            console.log("Error: ", error);
-        };
-    }
-    function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
-        if (e.target.files) {
-            setSelectedImage(e.target.files[0]);
-            toBase64(e.target.files[0]);
-        }
-    }
-    async function handleUpload(
-        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    ) {
-        setLoading(true);
+        reader.onload = () => setProfilePic(reader.result as string);
+        reader.onerror = (error) => console.log("Error: ", error);
+    };
+
+    const openInputFile = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
+        if (inputRef.current) inputRef.current.click();
+    };
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const selectedFile = e.target.files[0];
+            setSelectedImage(selectedFile);
+            toBase64(selectedFile);
+        }
+    };
+
+    const handleUpload = async (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    ) => {
+        e.preventDefault();
+        setLoading(true);
+
         try {
             const formData = new FormData();
             if (newSelectedImage) {
@@ -52,9 +58,7 @@ export default function UploadImage({
                     msg: "Image updated successfully",
                 });
                 setLoading(false);
-                setTimeout(() => {
-                    setToast(null);
-                }, 5000);
+                setTimeout(() => setToast(null), 5000);
             }
         } catch (error) {
             setLoading(false);
@@ -62,45 +66,43 @@ export default function UploadImage({
                 type: "danger",
                 msg: "Something went wrong with the upload",
             });
-            setTimeout(() => {
-                setToast(null);
-            }, 5000);
+            setTimeout(() => setToast(null), 5000);
         }
-    }
+    };
 
     return (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center mt-4">
             <form className="flex flex-col items-center">
                 <div className="mb-4">
-                    <label
-                        className="mb-1 block text-sm font-medium text-white"
-                        htmlFor="view_model_avatar"
-                    >
-                        Upload a profile picture
-                    </label>
-                    <div className="relative">
+                    <div className="relative flex justify-center">
                         <input
-                            onChange={(e) => handleImageChange(e)}
+                            onChange={handleImageChange}
                             className="border-gray-300 focus:ring-blue-600 block w-full overflow-hidden cursor-pointer border text-gray-800 bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:border-transparent"
-                            aria-describedby="view_model_avatar_help"
                             id="view_model_avatar"
                             name="image"
                             type="file"
+                            ref={inputRef}
+                            style={{ display: "none" }}
                         />
-                    </div>
-                    <div
-                        className="mt-1 text-sm text-gray-500"
-                        id="view_model_avatar_help"
-                    >
-                        A profile picture is useful to confirm you are logged
-                        into your account
+                        <Button onClick={openInputFile} className="flex items-center gap-4">
+                            <svg
+                                viewBox="64 64 896 896"
+                                focusable="false"
+                                data-icon="upload"
+                                width="1em"
+                                height="1em"
+                                fill="white"
+                                aria-hidden="true"
+                            >
+                                <path d="M400 317.7h73.9V656c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V317.7H624c6.7 0 10.4-7.7 6.3-12.9L518.3 163a8 8 0 00-12.6 0l-112 141.7c-4.1 5.3-.4 13 6.3 13zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"></path>
+                            </svg>
+                            Upload Avatar
+                        </Button>
                     </div>
                 </div>
-                <button
-                    type="submit"
-                    className="text-[#303030] bg-white px-4 py-2 rounded-lg text-sm cursor-pointer disabled:bg-slate-100 disabled:text-zinc-500 disabled:cursor-not-allowed flex justify-center items-center"
-                    onClick={(e) => handleUpload(e)}
-                >
+                {
+                    newSelectedImage ? (
+                        <Button type="submit" onClick={handleUpload}>
                     {loading ? (
                         <svg
                             aria-hidden="true"
@@ -122,7 +124,10 @@ export default function UploadImage({
                     ) : (
                         "Save"
                     )}
-                </button>
+                </Button>
+                    ) : null
+                }
+                
                 {toast ? (
                     <Toast toastType={toast.type} message={toast.msg} />
                 ) : null}
@@ -130,3 +135,5 @@ export default function UploadImage({
         </div>
     );
 }
+
+export default UploadImage;

@@ -5,6 +5,7 @@ import axios from "axios";
 import { useState } from "react";
 
 
+
 export default function Dialog({ id }: { id:string }){
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const queryClient = useQueryClient();
@@ -29,19 +30,12 @@ export default function Dialog({ id }: { id:string }){
     };
     
     return (
-        <div>
+        <div className="z-50">
             <button
                 onClick={openModal}
                 type="button"
-                className="px-2.5 cursor-pointer py-2.5 rounded-lg bg-white"
             >
-                    <svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0.75 3.74524H13.25" stroke="#303030" stroke-width="1.5" stroke-linecap="round"/>
-                        <path d="M11.4907 3.74521H2.50506L2.44076 4.90786C2.31755 7.13545 2.42223 9.3698 2.75318 11.5761C2.8975 12.5382 3.72399 13.25 4.69687 13.25H9.29888C10.2718 13.25 11.0983 12.5382 11.2426 11.5761C11.5735 9.3698 11.6782 7.13545 11.555 4.90786L11.4907 3.74521Z" stroke="#303030" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M4.50186 3.74521V3.246C4.50186 2.58402 4.76483 1.94915 5.23293 1.48106C5.70102 1.01297 6.33589 0.749998 6.99787 0.749998C7.65985 0.749998 8.29472 1.01297 8.76281 1.48106C9.2309 1.94915 9.49388 2.58402 9.49388 3.246V3.74521" stroke="#303030" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M5.50027 6.41867V10.5566" stroke="#303030" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M8.49548 6.41867V10.5566" stroke="#303030" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                Remove
             </button>
 
             {isOpen && (

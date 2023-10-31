@@ -1,7 +1,5 @@
 import { getIconComponent } from "@/lib/icons";
 import { prisma } from "@/lib/prisma";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 import Image from "next/image";
 
 type TProps = {

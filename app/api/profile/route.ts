@@ -39,6 +39,7 @@ export async function POST(request:NextRequest){
         })
         return NextResponse.json({message: "Data updated successfully"})
     } catch (error) {
-        return NextResponse.json({error: "Something went wrong"}, {status: 500})
+        console.log(error);
+        return NextResponse.json({error: "Username is not available"}, {status: 500})
     }
 }

@@ -16,6 +16,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       return NextResponse.json({ error: "User not found." }, { status: 404 });
     }
     const form = await req.formData()
+    console.log(req)
     const cloudinaryResponse = await axios.post(
         `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/upload`,
         form,

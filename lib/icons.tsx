@@ -1,3 +1,32 @@
+export const socialMediaPlatforms = [
+    "Apple",
+    "Dribble",
+    "Github",
+    "LinkedIn",
+    "Pinterest",
+    "Snapchat",
+    "Threads",
+    "Twitch",
+    "Twitter",
+    "Clubhouse",
+    "Facebook",
+    "Google",
+    "Medium",
+    "Reddit",
+    "Spotify",
+    "TikTok",
+    "VK",
+    "YouTube",
+    "Discord",
+    "Figma",
+    "Instagram",
+    "Messenger",
+    "Signal",
+    "Telegram",
+    "Tumblr",
+    "WhatsApp"
+];
+
 export function getIconComponent(iconName: string, theme: string) {
     switch (iconName) {
         case "Apple":

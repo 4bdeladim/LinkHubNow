@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import axios from 'axios';
-import Toast from '../Components/Toast';
+import Toast from '../../components/Toast';
 import { redirect } from 'next/navigation';
 
 interface IMessage {
