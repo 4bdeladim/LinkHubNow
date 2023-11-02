@@ -19,7 +19,7 @@ export default function Nav() {
             navigator.clipboard.writeText(link)
         }
     }
-    if(["/preview", "/edit", "/profile", "/"].indexOf(pathName) && pattern.test(pathName)) {
+    if(!["/preview", "/edit", "/profile", "/"].indexOf(pathName) && pattern.test(pathName)) {
         return null
     }
     return (
