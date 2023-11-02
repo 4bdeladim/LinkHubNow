@@ -2,21 +2,21 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
 import Toast from "@/components/Toast";
-import Loading from "@/components/Loading";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import UploadImage from "@/components/UploadImage";
 import { getProfileInfo } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
+import { redirect } from "next/navigation";
 
 export default function Bio() {
     const [newBio, setBio] = useState<string>("");
     const [newUsername, setUsername] = useState<string>("");
-    const [loading, setLoading] = useState(false);
     const [profilePic, setProfilePic] = useState<string>("");
     const [error, setError] = useState<{
         type: "danger" | "success";
@@ -24,6 +24,9 @@ export default function Bio() {
     } | null>(null);
     const session = useSession();
     const user = session?.data?.user;
+    if(!user) {
+        redirect("/");
+    }
     const { data, isLoading } = useQuery(["profileInfo"], getProfileInfo);
     
     async function setProfileInfo(){
@@ -44,16 +47,13 @@ export default function Bio() {
                 });
                 return;
             }
-            setLoading(true);
             await axios.post("/api/profile", {
                 bio: newBio,
                 username: newUsername,
             });
-            setLoading(false);
             setError({ type: "success", msg: "Data updated successfully" });
         } catch (error: any) {
             setError({ type: "danger", msg: error.response.data.error });
-            setLoading(false);
             return null;
         }
     };
@@ -93,6 +93,12 @@ export default function Bio() {
                             Save
                         </button>
                     </form>
+                    <button className="bg-red-500 px-6 py-2 rounded-md text-white font-medium"
+                            type="submit"
+                            onClick={(e) => signOut()}
+                        >
+                            Log out 
+                        </button>
                     {error && (
                         <Toast toastType={error.type} message={error.msg} />
                     )}

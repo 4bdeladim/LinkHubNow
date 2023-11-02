@@ -15,6 +15,7 @@ export async function GET(){
         })
         return NextResponse.json({bio:account?.bio, username: account?.username, image: account?.avatar});
     } catch (error) {
+
         return NextResponse.json({error: "Something went wrong"}, {status: 500})
     }
 }
@@ -39,7 +40,6 @@ export async function POST(request:NextRequest){
         })
         return NextResponse.json({message: "Data updated successfully"})
     } catch (error) {
-        console.log(error);
         return NextResponse.json({error: "Username is not available"}, {status: 500})
     }
 }

@@ -1,20 +1,23 @@
 "use client"
 import { getProfileInfo } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 
 export default function Nav() {
     const pathName = usePathname();
+    const session = useSession();
     const { data} = useQuery(["profileInfo"], getProfileInfo);
+    if(!session.data?.user) return null;
     function copy() {
         if(data.username) {
             const domain = process.env.DOMAIN as string;
             const link = domain + "/" + data.username
             navigator.clipboard.writeText(link)
         }
-    };
+    }
     return (
         <div className="flex justify-between gap-8 items-center h-[60px] rounded-md bg-white w-11/12 px-4">
             {

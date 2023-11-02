@@ -19,7 +19,9 @@ export default async function Preview() {
                 userId: user?.id
             }
         })
-        if(!account) redirect("/")
+        if(!account) {
+            redirect("/")
+        }
         const links = await prisma.link.findMany({
             where: {
                 accountId: account.id
@@ -34,20 +36,23 @@ export default async function Preview() {
                         { account.username }
                     </h2>
                     {
-                        links.map((link, id) => (
-                            <div key={id} className="flex justify-center items-center gap-4 bg-[#633cff] my-4 px-10 sm:px-24 py-2 rounded-md w-full">
-                                {getIconComponent(link.icon, "light")}
-                                <h4 className="text-white">
-                                    { link.title }
-                                </h4>
-                            </div>
-                        ))
+                        links?.length > 0 ? (
+                            links?.map((link, id) => (
+                                <div key={id} className="flex justify-center items-center gap-4 bg-[#633cff] my-4 px-10 sm:px-24 py-2 rounded-md w-full">
+                                    {getIconComponent(link.icon, "light")}
+                                    <h4 className="text-white">
+                                        { link.title }
+                                    </h4>
+                                </div>
+                            ))
+                        ) : null
                     }
                 </div>
             </div>
         );
     } catch (error) {
-        redirect("/");
+        await redirect("/");
+        return null;
     }
     
 }

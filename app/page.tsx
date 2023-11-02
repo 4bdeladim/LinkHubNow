@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import Link from "next/link";
 
 
 type TLoginType = "credentials" | "google" | "github";
@@ -21,7 +22,6 @@ export default function SignIn() {
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
     const searchParams = useSearchParams();
-    const [error, setError] = useState<string>()
     const callbackUrl = searchParams.get("callbackUrl") || "/edit";
     const login = async (loginType: TLoginType) => {
         switch (loginType) {
@@ -41,9 +41,6 @@ export default function SignIn() {
                 }).then((res) => {
                     
                     if(!res?.error) redirect("/edit")
-                    else {
-                        setError("Invalid Credentials")
-                    }
                 })
                 return;
             case "google":
@@ -60,15 +57,27 @@ export default function SignIn() {
         redirect("/edit");
     }
         return (
-            <Card className="w-[350px]">
+            <Card className="w-[350px] h-[200px] self-center mx-auto">
               <CardHeader className="space-y-1">
-                <CardTitle className="text-2xl">Sign in to your account</CardTitle>
-                <CardDescription>
-                  Enter your email and password below to sign in
-                </CardDescription>
+                <CardTitle className="text-2xl text-center">Sign in to your account</CardTitle>
               </CardHeader>
               <CardContent className="grid gap-4">
-                <div className="grid grid-cols-2 gap-6">
+                <Button onClick={() => login("google")} variant="outline">
+                    <svg
+                        className="mr-2 h-4 w-4"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 18 19"
+                    >
+                        <path
+                            fillRule="evenodd"
+                            d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z"
+                            clipRule="evenodd"
+                        />
+                    </svg>
+                    Google
+                  </Button>
                   <Button onClick={() => login("github")} variant="outline">
                     <svg
                         className="mr-2 h-4 w-4"
@@ -85,45 +94,8 @@ export default function SignIn() {
                     </svg>
                     Github
                   </Button>
-                  <Button onClick={() => login("google")} variant="outline">
-                    <svg
-                        className="mr-2 h-4 w-4"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 18 19"
-                    >
-                        <path
-                            fillRule="evenodd"
-                            d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z"
-                            clipRule="evenodd"
-                        />
-                    </svg>
-                    Google
-                  </Button>
-                </div>
-                <div className="relative">
-                  <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t" />
-                  </div>
-                  <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-muted-foreground">
-                      Or continue with
-                    </span>
-                  </div>
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input onChange={(e) => setEmail(e.target.value)} id="email" type="email" placeholder="m@example.com" />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="password">Password</Label>
-                  <Input onChange={(e) => setPassword(e.target.value)}  id="password" type="password" />
-                </div>
               </CardContent>
-              <CardFooter>
-                <Button onClick={() => login("credentials")} className="w-full">Sign In</Button>
-              </CardFooter>
+              
             </Card>
           );
 }

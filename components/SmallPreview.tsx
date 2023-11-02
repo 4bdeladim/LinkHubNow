@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Skeleton } from "./ui/skeleton";
 import { getIconComponent } from "@/lib/icons";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function SmallPreview(){
     const {
@@ -15,8 +16,10 @@ export default function SmallPreview(){
         isLoading,
     } = useQuery<TNewLink[]>(["links"], getLinks);
     const { data, isLoading:profileIsLoading } = useQuery(["profileInfo"], getProfileInfo);
+    const session = useSession();
+    const user = session?.data?.user;
     const pathName = usePathname();
-    if(pathName === "/preview") {
+    if(["/edit", "/profile"].indexOf(pathName) < 0) {
         return null; 
     }
     return (

@@ -3,7 +3,6 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { TNewLink, addLinks, getLinks } from "@/lib/utils";
-import Loading from "@/components/Loading";
 import EditLink from "@/components/EditLink";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -21,7 +20,6 @@ export default function Edit() {
     const userId = user?.id;
     const {
         data: links,
-        error,
         isLoading,
     } = useQuery<TLink[]>(["links"], getLinks);
     const [newLinks, setNewLinks] = useState<TNewLink[]|null>(null);
@@ -71,7 +69,7 @@ export default function Edit() {
         return true;
     }
     return (
-        <div className="rounded-md bg-white w-full gap-4 flex justify-center items-center flex-col flex-1 p-8 max-h-[calc(100vh-156px)] overflow-scroll">
+        <div className={`rounded-md bg-white w-full gap-4 flex justify-center items-center flex-col flex-1 p-8 max-h-full overflow-scroll`}>
             {isLoading ? (
                 <div className="w-full h-full">
                     <div className="h-[230px] w-full">
@@ -88,11 +86,7 @@ export default function Edit() {
                     </div>
                     <div className="max-h-[calc(100%-300px)] overflow-scroll">
                         <div className="w-full flex flex-col gap-8">
-                            {
-                                new Array(5).fill(0).map((newLink, index) => (
-                                    <Skeleton key={index} className="h-80 w-full" />
-                                ))
-                            }
+                            <Skeleton className="h-80 w-full" />
                         </div>
                     </div>
                     <button onClick={saveLinks} disabled={isSaveDisabled()} className="rounded-md bg-[#633cff] text-base float-right font-semibold text-white py-2 px-4 mt-6 mb-8 disabled:opacity-50 disabled:cursor-not-allowed" type="button">Save</button>

@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/prisma";
 import axios from "axios";
-import { v2 as cloudinary } from "cloudinary";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
@@ -8,7 +7,7 @@ import { authOptions } from "../auth/[...nextauth]/route";
 
 
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -16,7 +15,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
       return NextResponse.json({ error: "User not found." }, { status: 404 });
     }
     const form = await req.formData()
-    console.log(req)
     const cloudinaryResponse = await axios.post(
         `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/upload`,
         form,
