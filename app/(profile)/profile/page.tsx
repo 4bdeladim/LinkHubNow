@@ -95,7 +95,7 @@ export default function Bio() {
                     </form>
                     <button className="bg-red-500 px-6 py-2 rounded-md text-white font-medium"
                             type="submit"
-                            onClick={(e) => signOut()}
+                            onClick={() => signOut()}
                         >
                             Log out 
                         </button>

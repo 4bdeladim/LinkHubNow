@@ -2,7 +2,6 @@
 import { useQuery } from "@tanstack/react-query";
 import Phone from "./Phone";
 import { TNewLink, getLinks, getProfileInfo } from "@/lib/utils";
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Skeleton } from "./ui/skeleton";
 import { getIconComponent } from "@/lib/icons";
@@ -12,13 +11,12 @@ import { useSession } from "next-auth/react";
 export default function SmallPreview(){
     const {
         data: links,
-        error,
-        isLoading,
     } = useQuery<TNewLink[]>(["links"], getLinks);
-    const { data, isLoading:profileIsLoading } = useQuery(["profileInfo"], getProfileInfo);
+    const { data } = useQuery(["profileInfo"], getProfileInfo);
     const session = useSession();
     const user = session?.data?.user;
     const pathName = usePathname();
+    if(!user) return null;
     if(["/edit", "/profile"].indexOf(pathName) < 0) {
         return null; 
     }

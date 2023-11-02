@@ -1,4 +1,3 @@
-import { RcFile } from "antd/es/upload";
 import axios from "axios"
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
@@ -14,12 +13,6 @@ export async function getLinks() {
     return data.links
 }
 
-
-export const getBase64 = (img: RcFile, callback: (url: string) => void) => {
-  const reader = new FileReader();
-  reader.addEventListener('load', () => callback(reader.result as string));
-  reader.readAsDataURL(img);
-};
 
 export type TNewLink = {
   title: string,

@@ -15,8 +15,10 @@ interface IProps {
     platformName: string,
     platformIcon: string,
     platformLink: string,
+    // eslint-disable-next-line no-unused-vars
     deleteNewLink?: (index:number) => void ,
     index: number,
+    // eslint-disable-next-line no-unused-vars
     changeValues: (index:number, link:TNewLink) => void 
 }
 export default function EditLink({id, platformName, platformIcon, platformLink, index, changeValues, deleteNewLink}: IProps) {

@@ -6,21 +6,14 @@ import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import Link from "next/link";
 
 
 type TLoginType = "credentials" | "google" | "github";
 export default function SignIn() {
     const { status } = useSession();
-    const [email, setEmail] = useState<string>();
-    const [password, setPassword] = useState<string>();
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get("callbackUrl") || "/edit";
     const login = async (loginType: TLoginType) => {
@@ -31,17 +24,6 @@ export default function SignIn() {
                     callbackUrl,
                     
                 });
-                return;
-            case "credentials":
-                await signIn("credentials", {
-                    callbackUrl,
-                    redirect: false,
-                    email,
-                    password,
-                }).then((res) => {
-                    
-                    if(!res?.error) redirect("/edit")
-                })
                 return;
             case "google":
                 await signIn("google", {
