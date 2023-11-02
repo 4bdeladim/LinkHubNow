@@ -10,6 +10,7 @@ export default function Nav() {
     const pathName = usePathname();
     const session = useSession();
     const { data} = useQuery(["profileInfo"], getProfileInfo);
+    const pattern: RegExp = /^\/[^/]+$/
     if(!session.data?.user) return null;
     function copy() {
         if(data.username) {
@@ -17,6 +18,9 @@ export default function Nav() {
             const link = domain + "/" + data.username
             navigator.clipboard.writeText(link)
         }
+    }
+    if(["/preview", "/edit", "/profile", "/"].indexOf(pathName) && pattern.test(pathName)) {
+        return null
     }
     return (
         <div className="flex justify-between gap-8 items-center h-[60px] rounded-md bg-white w-11/12 px-4">

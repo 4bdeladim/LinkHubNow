@@ -1,57 +1,57 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getIconComponent } from "@/lib/icons";
 import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
-
-type TProps = {
-    id: string;
-    bio:string,
-    img: string
-};
-type TLink = {
-    id: string;
-    title: string;
-    url: string;
-    icon: string;
-    accountId: string;
-};
-const Links = async ({ img, id, bio }: TProps) => {
-    const accountLinks: TLink[] = await prisma.link.findMany({
-        where: {
-            accountId: id,
-        },
-    });
-    return (
-        <div className="flex flex-col gap-8 items-center">
-            
-            {
-                img && (
-                    <Image
-                        width="180"
-                        height="180"
-                        src={img as string}
-                        alt="Avatar"
-                        className="border rounded-full"
-                        loading="eager" 
-                        priority={true}
-                    />
-                )
+import { redirect } from "next/navigation";
+const Links = async ({username}:{username?:string}) => {
+    var account;
+    if(username) {
+        account = await prisma.account.findUnique({
+            where:{
+                username: username
             }
-            <h1 className="text-white my-2">
-                { bio }
-            </h1>
-            {accountLinks.map((link) => {
-                return (
-                    <a
-                        key={link.id}
-                        href={link.url}
-                        className="w-[320px] flex cursor-pointer justify-center gap-4  font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center mr-2 my-1 bg-white text-black"
-                    >
-                        {getIconComponent(link.icon, "dark")}
-                        {link.title}
-                    </a>
-                );
-            })}
-        </div>
+        })
+    } else {
+        const session = await getServerSession(authOptions);
+        const user = session?.user ;
+        if(!user){
+            redirect("/")
+        } 
+        account = await prisma.account.findUnique({
+            where: {
+                userId: user?.id
+            }
+        }) 
+    }
+    if(!account) {
+        redirect("/")
+    }  
+    const links = await prisma.link.findMany({
+        where: {
+            accountId: account.id
+        }
+    })
+    
+    return (
+        <div className="rounded-lg border bg-card text-card-foreground shadow-sm flex flex-col items-center justify-center px-6 sm:px-12 py-10 min-w-[320px]">
+                    <Image src={account.avatar as string} alt="Avatar" width={160} height={160} className="rounded-full text-center" />
+                    <h2 className="font-bold text-center my-4">
+                        { account.username }
+                    </h2>
+                    {
+                        links?.length > 0 ? (
+                            links?.map((link, id) => (
+                                <div key={id} className="flex justify-center items-center gap-4 bg-[#633cff] my-4 px-10 sm:px-24 py-2 rounded-md w-full">
+                                    {getIconComponent(link.icon, "light")}
+                                    <h4 className="text-white">
+                                        { link.title }
+                                    </h4>
+                                </div>
+                            ))
+                        ) : null
+                    }
+                </div>
     );
 };
 
